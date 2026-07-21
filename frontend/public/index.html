@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Docker Compose Test</title></head>
+  <body style="font-family:system-ui;max-width:720px;margin:5rem auto;padding:1rem">
+    <h1>Hello from deploy-test-docker-compose</h1>
+    <p>The frontend container is running. The API status is: <strong id="status">checking…</strong></p>
+    <script>
+      fetch('/api/health').then((response) => response.json()).then((data) => {
+        document.querySelector('#status').textContent = data.status;
+      }).catch(() => {
+        document.querySelector('#status').textContent = 'unavailable';
+      });
+    </script>
+  </body>
+</html>
