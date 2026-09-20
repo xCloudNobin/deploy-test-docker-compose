@@ -1,15 +1,40 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Docker Compose Test</title></head>
-  <body style="font-family:system-ui;max-width:720px;margin:5rem auto;padding:1rem">
-    <h1>Hello from deploy-test-docker-compose</h1>
-    <p>The frontend container is running. The API status is: <strong id="status">checking…</strong></p>
-    <script>
-      fetch('/api/health').then((response) => response.json()).then((data) => {
-        document.querySelector('#status').textContent = data.status;
-      }).catch(() => {
-        document.querySelector('#status').textContent = 'unavailable';
-      });
-    </script>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Task Board</title>
+    <link rel="stylesheet" href="/app.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <h1>Task Board</h1>
+        <span class="tag">compose + postgres</span>
+      </div>
+      <div class="toolbar">
+        <input id="project-search" type="search" placeholder="Search projects…" autocomplete="off">
+        <button id="new-project-btn" type="button" class="btn btn-primary">+ New project</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="pane project-pane" aria-label="Projects">
+        <h2>Projects</h2>
+        <ul id="project-list" class="project-list"></ul>
+        <p id="project-empty" class="empty" hidden>No projects yet.</p>
+      </aside>
+
+      <section class="pane task-pane" id="project-view" aria-label="Selected project">
+        <p id="select-hint" class="empty">Select a project on the left to view its tasks.</p>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span id="release" data-release="__APP_RELEASE__">local</span>
+      <span id="api-meta"></span>
+    </footer>
+
+    <script src="/app.js"></script>
   </body>
 </html>
