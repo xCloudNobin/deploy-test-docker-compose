@@ -1,4 +1,3 @@
-console.log('LOGMARKER container-log-line');
 import express from 'express';
 
 const app = express();
