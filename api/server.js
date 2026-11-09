@@ -91,7 +91,7 @@ app.get('/api/health/ready', async (_request, response) => {
 });
 
 app.get('/api/meta', (_request, response) => {
-  response.json({ app: 'compose-taskboard', release, code_revision: 'zdd-engine-v1', node: process.version, db: 'postgres' });
+  response.json({ app: 'compose-taskboard', release, code_revision: 'zdd-engine-v2', node: process.version, db: 'postgres' });
 });
 
 app.get('/api/projects', async (request, response) => {
