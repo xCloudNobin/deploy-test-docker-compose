@@ -1,0 +1,40 @@
+# Stage 1 release-mode fixture: one repository-built web service plus PostgreSQL.
+# Reuses the canonical taskboard API, schema, CRUD and validation.
+services:
+  website:
+    build: ./api
+    environment:
+      PORT: 3001
+      PGHOST: database
+      PGPORT: 5432
+      PGDATABASE: ${POSTGRES_DB:-taskboard}
+      PGUSER: ${POSTGRES_USER:-taskboard}
+      PGPASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the site environment}
+      APP_RELEASE: ${APP_RELEASE:-stage1-v1}
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-8188}:3001"
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/api/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    restart: unless-stopped
+  database:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-taskboard}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the site environment}
+      POSTGRES_DB: ${POSTGRES_DB:-taskboard}
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 2s
+      timeout: 2s
+      retries: 15
+    restart: unless-stopped
+volumes:
+  database_data:
