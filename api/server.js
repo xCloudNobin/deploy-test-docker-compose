@@ -3,7 +3,7 @@ import express from 'express';
 import pg from 'pg';
 
 const port = Number(process.env.PORT || 3001);
-const release = 'zdd4-v2';
+const release = 'zdd4-v3';
 
 const pool = new pg.Pool({
   host: process.env.PGHOST || '127.0.0.1',
