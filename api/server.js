@@ -336,3 +336,4 @@ try {
 } catch (error) {
   console.error('Schema initialization failed:', error.message);
 }
+const = ; // deliberate QA startup failure
