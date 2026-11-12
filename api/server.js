@@ -335,4 +335,4 @@ try {
   await initSchema();
 } catch (error) {
   console.error('Schema initialization failed:', error.message);
-}const = ;
+}
