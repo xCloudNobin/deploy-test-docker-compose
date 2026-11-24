@@ -1,0 +1,9 @@
+# Fixture: compose file in a subfolder; requires APP_KEY from the site-root .env.
+services:
+  web:
+    image: nginx:alpine
+    environment:
+      APP_KEY: ${APP_KEY:?APP_KEY is required}
+    ports:
+      - "${FRONTEND_PORT:-8188}:80"
+    restart: unless-stopped
